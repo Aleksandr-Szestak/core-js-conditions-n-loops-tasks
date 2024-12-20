@@ -21,8 +21,9 @@
  *  0  => true
  *  -5 => false
  */
-function isPositive(/* number */) {
-  throw new Error('Not implemented');
+function isPositive(number) {
+  const result = number >= 0;
+  return result;
 }
 
 /**
@@ -38,8 +39,20 @@ function isPositive(/* number */) {
  *  -5, 0, 5      => 5
  *  -0.1, 0, 0.2  => 0.2
  */
-function getMaxNumber(/* a, b, c */) {
-  throw new Error('Not implemented');
+function getMaxNumber(a, b, c) {
+  let result;
+  if (a > b) {
+    if (a > c) {
+      result = a;
+    } else {
+      result = c;
+    }
+  } else if (b > c) {
+    result = b;
+  } else {
+    result = c;
+  }
+  return result;
 }
 
 /**
@@ -60,8 +73,62 @@ function getMaxNumber(/* a, b, c */) {
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  */
-function canQueenCaptureKing(/* queen, king */) {
-  throw new Error('Not implemented');
+function canQueenCaptureKing(queen, king) {
+  let xx;
+  let yy;
+  let result = false;
+  if (queen.x === king.x || queen.y === king.y) {
+    result = true;
+  }
+  if (!result) {
+    xx = queen.x;
+    yy = queen.y;
+    while (xx <= 8 && yy <= 8) {
+      if (xx === king.x && yy === king.y) {
+        result = true;
+        break;
+      }
+      xx += 1;
+      yy += 1;
+    }
+  }
+  if (!result) {
+    xx = queen.x;
+    yy = queen.y;
+    while (xx <= 8 && yy >= 1) {
+      if (xx === king.x && yy === king.y) {
+        result = true;
+        break;
+      }
+      xx += 1;
+      yy -= 1;
+    }
+  }
+  if (!result) {
+    xx = queen.x;
+    yy = queen.y;
+    while (xx >= 1 && yy <= 8) {
+      if (xx === king.x && yy === king.y) {
+        result = true;
+        break;
+      }
+      xx -= 1;
+      yy += 1;
+    }
+  }
+  if (!result) {
+    xx = queen.x;
+    yy = queen.y;
+    while (xx >= 1 && yy >= 1) {
+      if (xx === king.x && yy === king.y) {
+        result = true;
+        break;
+      }
+      xx -= 1;
+      yy -= 1;
+    }
+  }
+  return result;
 }
 
 /**
@@ -82,8 +149,18 @@ function canQueenCaptureKing(/* queen, king */) {
  *  2, 2, 5   => false
  *  3, 0, 3   => false
  */
-function isIsoscelesTriangle(/* a, b, c */) {
-  throw new Error('Not implemented');
+function isIsoscelesTriangle(a, b, c) {
+  let result = false;
+  if (a === b && a + b > c && c !== 0) {
+    result = true;
+  }
+  if (a === c && a + c > b && b !== 0) {
+    result = true;
+  }
+  if (b === c && b + c > a && a !== 0) {
+    result = true;
+  }
+  return result;
 }
 
 /**
@@ -100,8 +177,32 @@ function isIsoscelesTriangle(/* a, b, c */) {
  *  10  => X
  *  26  => XXVI
  */
-function convertToRomanNumerals(/* num */) {
-  throw new Error('Not implemented');
+function convertToRomanNumerals(num) {
+  let result = '';
+  let i;
+  let inum = num;
+  const dig10 = Math.floor(inum / 10);
+  if (dig10 > 0) {
+    inum %= 10;
+    for (i = 1; i <= dig10; i += 1) {
+      result += 'X';
+    }
+  }
+  const dig5 = Math.floor(inum / 5);
+  if (dig5 > 0) {
+    inum %= 5;
+    for (i = 1; i <= dig5; i += 1) {
+      result += inum < 4 ? 'V' : 'IX';
+    }
+  }
+  if (inum > 0 && inum < 4) {
+    for (i = 1; i <= inum; i += 1) {
+      result += 'I';
+    }
+  } else if (inum === 4 && dig5 === 0) {
+    result += 'IV';
+  }
+  return result;
 }
 
 /**
@@ -119,8 +220,38 @@ function convertToRomanNumerals(/* num */) {
  *  '10,5'    => 'one zero point five'
  *  '1950.2'  => 'one nine five zero point two'
  */
-function convertNumberToString(/* numberStr */) {
-  throw new Error('Not implemented');
+// function convertNumberToString(/* numberStr */) {
+//   throw new Error('Not implemented');
+// }
+function convertNumberToString(numberStr) {
+  const arrSymbols = [
+    'zero',
+    'one',
+    'two',
+    'three',
+    'four',
+    'five',
+    'six',
+    'seven',
+    'eight',
+    'nine',
+  ];
+  let result = '';
+  let symb;
+  let symbC;
+  for (let i = 0; i < numberStr.length; i += 1) {
+    symb = numberStr[i];
+    if (symb === '-') {
+      symbC = 'minus';
+    } else if (symb === '.' || symb === ',') {
+      symbC = 'point';
+    } else {
+      symb = +symb;
+      symbC = arrSymbols[symb];
+    }
+    result += `${symbC} `;
+  }
+  return result;
 }
 
 /**
