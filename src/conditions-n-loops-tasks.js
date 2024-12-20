@@ -241,15 +241,20 @@ function convertNumberToString(numberStr) {
   let symbC;
   for (let i = 0; i < numberStr.length; i += 1) {
     symb = numberStr[i];
-    if (symb === '-') {
-      symbC = 'minus';
-    } else if (symb === '.' || symb === ',') {
-      symbC = 'point';
-    } else {
-      symb = +symb;
-      symbC = arrSymbols[symb];
+    switch (symb) {
+      case '-':
+        symbC = 'minus';
+        break;
+      case '.':
+      case ',':
+        symbC = 'point';
+        break;
+      default:
+        symbC = arrSymbols[+symb];
     }
-    result += `${symbC} `;
+
+    symbC += i < numberStr.length - 1 ? ' ' : '';
+    result += symbC;
   }
   return result;
 }
@@ -266,8 +271,12 @@ function convertNumberToString(numberStr) {
  *  '0123210'   => true
  *  'qweqwe'    => false
  */
-function isPalindrome(/* str */) {
-  throw new Error('Not implemented');
+function isPalindrome(str) {
+  let reverseStr = '';
+  for (let k = str.length - 1; k >= 0; k -= 1) {
+    reverseStr += str[k];
+  }
+  return str === reverseStr;
 }
 
 /**
